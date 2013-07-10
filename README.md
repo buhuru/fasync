@@ -1,7 +1,6 @@
 fasync
 ======
 
-
 How to use:
 '''
 //defer guaranties that your async steps will get their callback as last argument
@@ -30,3 +29,8 @@ waterfall foo1, foo2, (err, foo1data, foo2data) ->
 parallel foo1, foo2, (arrErr, foo1data, foo2data) ->
     log 'finish', arguments
 '''
+
+##todo:
+1.  get rid of prelude library
+2.  prepare js sources for using in browser
+3.  compare with async.js
