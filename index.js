@@ -77,6 +77,8 @@
     return each(cursor, foopipe);
   };
   defer = function(foo){
+    var largs;
+    largs = slice$.call(arguments, 1);
     if (typeof foo !== 'function') {
       throw 'type error: defer';
     }
@@ -89,7 +91,7 @@
       if (!next && typeof last(args === 'function')) {
         foo.call(foo, last(args));
       }
-      return apply(foo, args.concat([next]));
+      return apply(foo, largs.concat(args, [next]));
     };
   };
   if (module && module.exports) {

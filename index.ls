@@ -11,7 +11,6 @@ lapply = (foo=->, ...largs)->
 fiterator = (is-fallback = false, ...foopipe, finish=->) -> 
     return false if foopipe.length is 0
     fallback = [null]
-
     cursor = (pipe) ->
         foo = head pipe
         return finish 'type error' if typeof foo is not 'function'
@@ -40,7 +39,7 @@ parallel = (...foopipe, finish=->)->
 
     each cursor, foopipe
 
-defer = (foo) ->
+defer = (foo, ...largs) ->
     throw 'type error: defer' if typeof foo is not 'function'
     (...args, next=null)->
         if typeof next is not 'function' then
@@ -48,7 +47,8 @@ defer = (foo) ->
 
         if not next and typeof last args is 'function' then
             foo.call foo, last args
-        apply foo, args ++ [next]
+
+        apply foo, largs ++ args ++ [next]
         
 
 if module and module.exports then module.exports = {
