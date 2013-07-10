@@ -1,8 +1,12 @@
-{ List: {head, last, each}} = require 'prelude-ls'
+{ List: {head, last, each, tail}} = require 'prelude-ls'
 log = console.log
 
+
+apply = (foo=->, args=[])->
+    foo.apply foo, args
+
 lapply = (foo=->, ...largs)->
-    (...rargs)->  foo.apply foo, largs ++ rargs
+    (...rargs)->  apply foo, largs ++ rargs
 
 fiterator = (is-fallback = false, ...foopipe, finish=->) -> 
     return false if foopipe.length is 0
@@ -17,7 +21,7 @@ fiterator = (is-fallback = false, ...foopipe, finish=->) ->
         fallback.push res
         pipe.shift!
         if pipe.length is 0 then
-            finish err, fallback 
+            apply finish, [err] ++ tail fallback 
         else
             cursor pipe
     cursor foopipe
@@ -32,7 +36,7 @@ parallel = (...foopipe, finish=->)->
         return finish 'type error' if typeof foo is not 'function'
         (err=null, res=null) <- foo
         fallback.push [err, res]
-        finish.apply finish, fallback if foopipe.length is fallback.length
+        apply finish, fallback if foopipe.length is fallback.length
 
     each cursor, foopipe
 
@@ -44,7 +48,7 @@ defer = (foo) ->
 
         if not next and typeof last args is 'function' then
             foo.call foo, last args
-        foo.apply foo, args ++ [next]
+        apply foo, args ++ [next]
         
 
 if module and module.exports then module.exports = {
