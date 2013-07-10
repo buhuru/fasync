@@ -32,5 +32,6 @@ parallel foo1, foo2, (arrErr, foo1data, foo2data) ->
 
 ##todo:
 1.  get rid of prelude library
-2.  prepare js sources for using in browser
-3.  compare with async.js
+2.  write some tests
+3.  prepare js sources for using in browser
+4.  [compare with async.js]
