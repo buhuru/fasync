@@ -5,7 +5,6 @@ lapply = (foo=->, ...largs)->
     (...rargs)->  foo.apply foo, largs ++ rargs
 
 fiterator = (is-fallback = false, ...foopipe, finish=->) -> 
-    log arguments
     return false if foopipe.length is 0
     fallback = [null]
 
