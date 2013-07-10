@@ -15,9 +15,10 @@ fiterator = (is-fallback = false, ...foopipe, finish=->) ->
         foo = head pipe
         return finish 'type error' if typeof foo is not 'function'
         foo = lapply foo, last fallback if is-fallback
-        (err=null, res=null) <- foo
-        return finish err if err
-        fallback.push res
+        (err=null, ...results) <- foo
+        return apply finish, [err] ++ tail fallback if err
+        if results.length is 1 then results = results[0]
+        fallback.push results
         pipe.shift!
         if pipe.length is 0 then
             apply finish, [err] ++ tail fallback 
@@ -33,8 +34,9 @@ parallel = (...foopipe, finish=->)->
     fallback = []
     cursor = (foo) ->
         return finish 'type error' if typeof foo is not 'function'
-        (err=null, res=null) <- foo
-        fallback.push [err, res]
+        (err=null, ...results) <- foo
+        if results.length is 1 then results = results[0]
+        fallback.push [err, results]
         apply finish, fallback if foopipe.length is fallback.length
 
     each cursor, foopipe

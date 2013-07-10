@@ -36,13 +36,17 @@
       if (isFallback) {
         foo = lapply(foo, last(fallback));
       }
-      return foo(function(err, res){
+      return foo(function(err){
+        var results;
         err == null && (err = null);
-        res == null && (res = null);
+        results = slice$.call(arguments, 1);
         if (err) {
-          return finish(err);
+          return apply(finish, [err].concat(tail(fallback)));
         }
-        fallback.push(res);
+        if (results.length === 1) {
+          results = results[0];
+        }
+        fallback.push(results);
         pipe.shift();
         if (pipe.length === 0) {
           return apply(finish, [err].concat(tail(fallback)));
@@ -65,10 +69,14 @@
       if (typeof foo !== 'function') {
         return finish('type error');
       }
-      return foo(function(err, res){
+      return foo(function(err){
+        var results;
         err == null && (err = null);
-        res == null && (res = null);
-        fallback.push([err, res]);
+        results = slice$.call(arguments, 1);
+        if (results.length === 1) {
+          results = results[0];
+        }
+        fallback.push([err, results]);
         if (foopipe.length === fallback.length) {
           return apply(finish, fallback);
         }
