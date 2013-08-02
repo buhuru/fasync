@@ -2,7 +2,7 @@ fasync
 ======
 
 How to use:
-'''
+'''coffee
 //defer guaranties that your async steps will get their callback as last argument
 foo1 = defer (...args, next)->
     next null, 'foo1data'
