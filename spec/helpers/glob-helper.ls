@@ -5,8 +5,17 @@ its = (desc, func) ->
 log = console.log
 
 beforeEach ->
-    @addMatchers toBeFunction : ->
-        'Function' is typeof! @actual
+    @addMatchers { 
+        toBeFunction : ->
+            'Function' is typeof! @actual
+        toThrowError : ->
+            try 
+                @actual!
+            catch err 
+                return true
+            return false
+    }
+
 
 if module?.exports then
     exports.its = its
