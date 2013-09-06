@@ -2,9 +2,9 @@
   "name": "fasync",
   "version": "0.0.1",
   "description": "functional approach for handling async chains",
-  "main": "index",
+  "main": "grunt",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
@@ -14,5 +14,11 @@
   "license": "BSD",
   "dependencies": {
     "prelude-ls": "~1.0.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-livescript": "~0.5.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-jasmine": "~0.5.1"
   }
 }
