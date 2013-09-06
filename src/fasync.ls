@@ -47,8 +47,8 @@ defer = (foo, ...largs) ->
         if typeof next is not 'function' then
             throw 'type error: deferred function extect callback to be last argument' 
 
-        if not next and typeof last args is 'function' then
-            foo.call foo, last args
+        # if not next and typeof last args is 'function' then
+        #     foo.call foo, last args
 
         apply foo, largs ++ args ++ [next]
         
