@@ -2,7 +2,11 @@
 its = (desc, func) ->
   return jasmine.getEnv().it(desc, func);
 
+log = console.log
+
+beforeEach ->
+    @addMatchers toBeFunction : ->
+        'Function' is typeof! @actual
+
 if module?.exports then
     exports.its = its
-if window then
-    window.its = its

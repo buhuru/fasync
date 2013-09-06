@@ -53,7 +53,7 @@ defer = (foo, ...largs) ->
         apply foo, largs ++ args ++ [next]
         
 
-if module and module.exports then module.exports = {
+fasync = {
     _fiterator : fiterator
     _lapply : lapply
     defer : defer
@@ -61,3 +61,10 @@ if module and module.exports then module.exports = {
     pipe : pipe
     parallel : parallel
 }
+
+console.log('ololo')
+
+if module and module.exports then 
+    module.exports = fasync
+else
+    window.fasync = fasync    

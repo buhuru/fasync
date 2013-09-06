@@ -2,7 +2,7 @@ module.exports = (grunt)->
 
     grunt.loadNpmTasks 'grunt-livescript'
     grunt.loadNpmTasks 'grunt-contrib-clean'
-    grunt.loadNpmTasks 'grunt-contrib-jasmine'
+    grunt.loadNpmTasks 'grunt-jasmine-node'
 
     grunt.initConfig 
         livescript: dist : files : [
@@ -13,9 +13,16 @@ module.exports = (grunt)->
             ext: '.js'
         ]
         clean : ['./build']
-        jasmine: test: options: 
-            specs: 'build/spec/*-spec.js'
-            helpers: 'build/spec/*-helper.js'
+        jasmine_node:
+            specNameMatcher: "spec"
+            projectRoot: "./build"
+            useHelpers: true     
+            jUnit: 
+              report: true
+              savePath : "./build/reports/"
+              useDotNotation: true
+              consolidate: true
+    
         
     grunt.registerTask 'default', ['clean','livescript']
-    grunt.registerTask 'test', ['clean','livescript', 'jasmine']
+    grunt.registerTask 'test', ['clean','livescript', 'jasmine_node']
